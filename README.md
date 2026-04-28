@@ -1,148 +1,141 @@
-# 👥 User Management System — Sistema de Gestión de Usuarios
+# User Management System
 
 [![PHP](https://img.shields.io/badge/PHP-7.4+-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-A **User Management System** with authentication, role-based access control, and full CRUD operations. Built with PHP, MySQL, and modern CSS design featuring gradient styling and responsive layout.
+## Overview
 
----
+A user management system with authentication, role-based access control (RBAC), and full CRUD operations. Built with PHP, MySQL, and modern CSS. The system implements the Page Controller pattern where each PHP file handles routing, business logic, and view rendering for its designated operation.
 
-## 📸 Screenshots
+## Security Implementation
 
-> _Screenshots coming soon — the application features a registration form, login page, admin panel with user table, and role-based views._
+| Measure | Implementation |
+|---------|---------------|
+| **Password Storage** | BCrypt hashing via `password_hash()` / `password_verify()` |
+| **SQL Injection Prevention** | Prepared statements with `bind_param()` throughout |
+| **XSS Prevention** | Output encoding via `htmlspecialchars()` |
+| **Session Management** | Server-side PHP sessions with role verification |
+| **Centralized Configuration** | Database credentials isolated in `config.php` with environment variable support |
 
----
+## Architecture
 
-## 🎯 Features
-
-| Feature | Description |
-|---------|-------------|
-| 📝 **User Registration** | Name, newsletter, gender, country, birthdate |
-| 🔐 **Secure Login** | BCrypt password hashing with `password_hash()` |
-| 👮 **Role-Based Access** | `admin` (full CRUD) and `vista` (read-only) roles |
-| ✏️ **Edit Users** | Inline editing from admin panel |
-| 🗑️ **Delete Users** | Confirmation dialog before deletion |
-| 🛡️ **SQL Injection Protection** | Prepared statements throughout |
-| 📱 **Responsive Design** | Modern CSS with gradients, hover effects, and mobile support |
-
----
-
-## 🏗️ Architecture
-
-**Pattern:** Page Controller — each PHP file handles both routing logic and view rendering.
+**Pattern:** Page Controller — each PHP file serves as an independent controller handling its HTTP request lifecycle.
 
 ```
-┌─────────────────────┐
-│   Browser (Client)   │
-├─────────────────────┤
-│  index.html          │ → Registration form
-│  login.html          │ → Login form
-├─────────────────────┤
-│  login.php           │ → Authentication (BCrypt verify)
-│  alta.php            │ → INSERT new user
-│  editar.php          │ → UPDATE user
-│  eliminar.php        │ → DELETE user
-│  lista_admin.php     │ → Admin view (full CRUD)
-│  lista_vista.php     │ → Read-only view
-│  logout.php          │ → Session destroy
-├─────────────────────┤
-│  MySQL Database      │
-│  ├── Usuarios        │ → Registered people
-│  └── UsuariosSistema │ → Login credentials + roles
-└─────────────────────┘
+Browser -> index.html / login.html    (Static forms)
+        -> login.php                  (Authentication: BCrypt verify, session init)
+        -> alta.php                   (INSERT operation)
+        -> editar.php                 (UPDATE operation)
+        -> eliminar.php               (DELETE operation)
+        -> lista_admin.php            (Admin view: full CRUD table)
+        -> lista_vista.php            (Viewer: read-only table)
+        -> logout.php                 (Session termination)
+        -> config.php                 (Database connection factory)
+        -> MySQL (Usuarios, UsuariosSistema)
 ```
 
-### Security Measures
-- ✅ `password_hash()` with BCrypt for secure password storage
-- ✅ `password_verify()` for authentication
-- ✅ Prepared statements (`$stmt->bind_param`) to prevent SQL injection
-- ✅ `htmlspecialchars()` for XSS prevention in output
-- ✅ Session-based authentication with role verification
+### Role-Based Access Control
 
----
+| Role | Permissions |
+|------|------------|
+| `admin` | Full CRUD operations, user management |
+| `vista` | Read-only access to user listings |
 
-## 🛠️ Tech Stack
+## Technology Stack
 
-| Layer | Technology |
-|-------|-----------|
-| **Backend** | PHP 7.4+ |
-| **Frontend** | HTML5, CSS3 |
-| **Database** | MySQL 8.0 (InnoDB) |
-| **Server** | Apache (XAMPP/WAMP) |
-| **Auth** | BCrypt + Sessions |
+| Component | Technology |
+|-----------|-----------|
+| Backend | PHP 7.4+ |
+| Frontend | HTML5, CSS3 (gradient styling, responsive) |
+| Database | MySQL 8.0 (InnoDB) |
+| Server | Apache (XAMPP / WAMP) |
+| Auth | BCrypt + Server-side Sessions |
 
----
-
-## 📁 Project Structure
-
-```
-user-management-system/
-├── index.html          # Registration form
-├── login.html          # Login form
-├── login.php           # Authentication handler
-├── alta.php            # Create user
-├── editar.php          # Edit user
-├── eliminar.php        # Delete user
-├── lista_admin.php     # Admin panel (full CRUD)
-├── lista_vista.php     # Viewer panel (read-only)
-├── logout.php          # Session logout
-├── styles.css          # Modern CSS (gradients, responsive)
-├── database.sql        # Database schema + seed data
-└── README.md
-```
-
----
-
-## 🚀 Getting Started
+## Installation
 
 ### Prerequisites
-- PHP 7.4+
-- MySQL 8.0
-- Apache (XAMPP, WAMP, or similar)
+- PHP 7.4+, MySQL 8.0, Apache
 
-### 1. Set up the Database
 ```bash
 mysql -u root -p < database.sql
 ```
 
-### 2. Configure Database Connection
-Create a `config.php` or update credentials in PHP files:
-```php
-$servidor = "localhost";
-$usuario = "root";
-$contrasena = "your_password";
-$basededatos = "ejemplos";  // Database name
-```
+Configure credentials in `config.php` or via environment variables.
 
-### 3. Deploy
-Copy project files to your web server's document root (e.g., `htdocs/`).
+### Test Accounts
 
-### 4. Test Accounts
 | Username | Password | Role |
 |----------|----------|------|
-| `admin` | `admin123` | Admin (full CRUD) |
-| `usuario` | `usuario123` | Vista (read-only) |
+| admin | admin123 | admin |
+| usuario | usuario123 | vista |
 
----
+## Roadmap
 
-## 🔮 Roadmap
-
-- [ ] Extract database config to `config.php`
-- [ ] Add CSRF token protection
-- [ ] Web version with Node.js API + React frontend
+- [ ] CSRF token protection
+- [ ] Node.js REST API + React frontend migration
 - [ ] Docker containerization
-- [ ] Server-side validation improvements
-- [ ] Pagination for user lists
+- [ ] Server-side input validation enhancement
+- [ ] Pagination for user listings
 
----
+## License
 
-## 📄 License
-
-This project is licensed under the MIT License — see [LICENSE](./LICENSE) for details.
-
----
+MIT License. See [LICENSE](./LICENSE).
 
 **Developed by [Leonardo Diaz](https://github.com/LeoDiaz-DataSc)**
+
+---
+
+# Version en Espanol
+
+## Descripcion General
+
+Sistema de gestion de usuarios con autenticacion, control de acceso basado en roles (RBAC) y operaciones CRUD completas. Construido con PHP, MySQL y CSS moderno. El sistema implementa el patron Page Controller donde cada archivo PHP maneja enrutamiento, logica de negocio y renderizado de vista para su operacion designada.
+
+## Implementacion de Seguridad
+
+| Medida | Implementacion |
+|--------|---------------|
+| **Almacenamiento de Contrasenas** | Hashing BCrypt mediante `password_hash()` / `password_verify()` |
+| **Prevencion de Inyeccion SQL** | Sentencias preparadas con `bind_param()` en todo el sistema |
+| **Prevencion de XSS** | Codificacion de salida mediante `htmlspecialchars()` |
+| **Gestion de Sesiones** | Sesiones PHP del lado del servidor con verificacion de rol |
+| **Configuracion Centralizada** | Credenciales de BD aisladas en `config.php` con soporte de variables de entorno |
+
+## Arquitectura
+
+**Patron:** Page Controller — cada archivo PHP sirve como controlador independiente.
+
+```
+Navegador -> index.html / login.html    (Formularios estaticos)
+          -> login.php                  (Autenticacion: verificacion BCrypt, inicio de sesion)
+          -> alta.php                   (Operacion INSERT)
+          -> editar.php                 (Operacion UPDATE)
+          -> eliminar.php               (Operacion DELETE)
+          -> lista_admin.php            (Vista admin: tabla CRUD completa)
+          -> lista_vista.php            (Vista lectura: tabla solo lectura)
+          -> logout.php                 (Terminacion de sesion)
+          -> config.php                 (Fabrica de conexion a BD)
+          -> MySQL (Usuarios, UsuariosSistema)
+```
+
+## Instalacion
+
+### Requisitos Previos
+- PHP 7.4+, MySQL 8.0, Apache
+
+```bash
+mysql -u root -p < database.sql
+```
+
+Configure credenciales en `config.php` o mediante variables de entorno.
+
+## Hoja de Ruta
+
+- [ ] Proteccion con tokens CSRF
+- [ ] Migracion a API REST Node.js + frontend React
+- [ ] Contenedorizacion con Docker
+- [ ] Mejora de validacion de entradas del lado del servidor
+- [ ] Paginacion para listados de usuarios
+
+**Desarrollado por [Leonardo Diaz](https://github.com/LeoDiaz-DataSc)**
