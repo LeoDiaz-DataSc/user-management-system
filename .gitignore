@@ -1,0 +1,34 @@
+# PHP
+vendor/
+composer.lock
+
+# Environment & Config
+.env
+.env.local
+config.local.php
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+error_log
+
+# Uploads
+uploads/
+
+# Node (for future web version)
+node_modules/
+dist/
+build/
+
+# Docker
+docker-compose.override.yml

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Formulario de Registro</h2>
+
+        <form action="alta.php" method="post">
+
+            <div class="form-group">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ingrese su nombre completo">
+            </div>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" name="newsletter" value="1">
+                    Deseo suscribirme al newsletter
+                </label>
+            </div>
+
+            <div class="radio-group">
+                <label>Género:</label>
+                <label><input type="radio" name="genero" value="masculino" required> Masculino</label>
+                <label><input type="radio" name="genero" value="femenino"> Femenino</label>
+                <label><input type="radio" name="genero" value="otro"> Otro</label>
+            </div>
+
+            <div class="form-group">
+                <label for="pais">País:</label>
+                <select id="pais" name="pais" required>
+                    <option value="">-- Seleccione un país --</option>
+                    <option value="mexico">México</option>
+                    <option value="espana">España</option>
+                    <option value="argentina">Argentina</option>
+                    <option value="colombia">Colombia</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+            </div>
+
+        </form>
+
+        <div class="text-center mt-20">
+            <a href="login.html" class="link">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
