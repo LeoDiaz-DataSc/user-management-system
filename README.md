@@ -82,7 +82,7 @@ Configure credentials in `config.php` or via environment variables.
 
 MIT License. See [LICENSE](./LICENSE).
 
-**Developed by [Leonardo Diaz](https://github.com/LeoDiaz-DataSc)**
+**Developed by [Diego Leobardo Diaz Hernandez](https://github.com/LeoDiaz-DataSc)**
 
 ---
 
@@ -138,4 +138,4 @@ Configure credenciales en `config.php` o mediante variables de entorno.
 - [ ] Mejora de validacion de entradas del lado del servidor
 - [ ] Paginacion para listados de usuarios
 
-**Desarrollado por [Leonardo Diaz](https://github.com/LeoDiaz-DataSc)**
+**Desarrollado por [Diego Leobardo Diaz Hernandez](https://github.com/LeoDiaz-DataSc)**
