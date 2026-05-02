@@ -24,11 +24,11 @@ router.get('/', checkPermission('users.read'), async (req, res, next) => {
 // Crear usuario (Requiere permiso users.create)
 router.post('/', checkPermission('users.create'), logAction('CREATE_USER'), async (req, res, next) => {
     try {
-        const { id_rol, username, email, password, nombres, apellidos } = req.body;
+        const { id_rol, username, email, password, nombres, apellidos, genero, pais, fecha_nacimiento, newsletter } = req.body;
         
         await db.query(
-            'INSERT INTO Usuarios (ID_Rol, Username, Email, Password_Hash, Nombres, Apellidos) VALUES (?, ?, ?, SHA2(?, 256), ?, ?)',
-            [id_rol, username, email, password, nombres, apellidos]
+            'INSERT INTO Usuarios (ID_Rol, Username, Email, Password_Hash, Nombres, Apellidos, Genero, Pais, Fecha_Nacimiento, Newsletter) VALUES (?, ?, ?, SHA2(?, 256), ?, ?, ?, ?, ?, ?)',
+            [id_rol, username, email, password, nombres, apellidos, genero, pais, fecha_nacimiento, newsletter ? 1 : 0]
         );
         res.status(201).json({ success: true, message: 'Usuario creado exitosamente' });
     } catch (err) {
