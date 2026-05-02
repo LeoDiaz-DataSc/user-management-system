@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: iam_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: iam_system
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+
+  backend:
+    build: 
+      context: ./backend
+    container_name: iam_backend
+    ports:
+      - "3003:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=iam_system
+      - PORT=3000
+      - JWT_SECRET=super_secret_enterprise_key_2026
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: iam_frontend
+    ports:
+      - "5176:80"
+    environment:
+      - VITE_API_URL=http://localhost:3003/api
+    depends_on:
+      - backend
